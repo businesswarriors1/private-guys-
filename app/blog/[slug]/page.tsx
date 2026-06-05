@@ -6,6 +6,8 @@ import Footer from "@/app/components/Footer";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+export const dynamicParams = true;
+
 interface BlogPostPageProps {
   params: {
     slug: string;
@@ -119,11 +121,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       <main className="min-h-screen bg-gradient-to-b from-background via-background to-accent-gold/5 pt-24">
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Back Link */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="mb-8"
-          >
+          <div className="mb-8">
             <Link
               href="/blog"
               className="inline-flex items-center text-accent-gold hover:text-accent-gold-light transition-colors"
@@ -143,13 +141,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               </svg>
               Back to Blog
             </Link>
-          </motion.div>
+          </div>
 
           {/* Featured Image */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+          <div
             className="rounded-2xl overflow-hidden mb-12 h-96"
           >
             <img
@@ -157,13 +152,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               alt={post.title}
               className="w-full h-full object-cover"
             />
-          </motion.div>
+          </div>
 
           {/* Header */}
-          <motion.header
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+          <header
             className="mb-12"
           >
             {/* Category Badge */}
@@ -216,23 +208,17 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 <span className="text-sm">By {post.author}</span>
               </div>
             </div>
-          </motion.header>
+          </header>
 
           {/* Content */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
+          <div
             className="prose prose-invert max-w-none mb-12"
           >
             {parseContent(post.content)}
-          </motion.div>
+          </div>
 
           {/* Tags */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
             className="border-t border-b border-border-default py-8 mb-12"
           >
             <h3 className="text-text-primary font-semibold mb-4">Tags:</h3>
@@ -247,13 +233,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 </a>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Author Bio */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
             className="glass-card rounded-xl p-8 mb-12 border border-accent-gold/30"
           >
             <h3 className="text-text-primary font-heading font-bold text-lg mb-2">
@@ -262,14 +245,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             <p className="text-text-secondary">
               {post.author} is part of the Private Guys Australia team dedicated to providing helpful, respectful content for our community.
             </p>
-          </motion.div>
+          </div>
 
           {/* Related Posts */}
           {relatedPosts.length > 0 && (
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+            <section
               className="mt-16"
             >
               <h3 className="text-3xl font-heading font-bold text-text-primary mb-8">
@@ -298,14 +278,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                   </Link>
                 ))}
               </div>
-            </motion.section>
+            </section>
           )}
 
           {/* CTA Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <section
             className="mt-16 glass-card rounded-2xl p-12 text-center bg-gradient-to-r from-accent-gold/10 to-accent-gold/5"
           >
             <h3 className="text-3xl font-heading font-bold text-text-primary mb-4">
@@ -320,7 +297,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             >
               Browse Companions →
             </Link>
-          </motion.section>
+          </section>
         </article>
       </main>
       <Footer />
