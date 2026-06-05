@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandLogo from "@/app/components/BrandLogo";
 
 const quickLinks = {
   "New South Wales": ["Sydney", "Newcastle", "Wollongong"],
@@ -34,17 +35,10 @@ export default function Footer() {
       <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
-            <Link href="/" className="inline-flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-accent-gold/35 bg-accent-gold/10 font-heading font-bold text-accent-gold">
-                PG
-              </span>
-              <span>
-                <span className="block font-heading text-3xl font-bold text-gold-gradient">
-                  Private Guys
-                </span>
-                <span className="mt-1 block text-xs font-bold uppercase tracking-[0.22em] text-text-muted">
-                  Classified advertising platform
-                </span>
+            <Link href="/" className="inline-flex flex-col gap-3">
+              <BrandLogo className="h-auto w-[246px] text-white" />
+              <span className="text-xs font-bold uppercase tracking-[0.22em] text-text-muted">
+                Classified advertising platform
               </span>
             </Link>
             <p className="mt-6 max-w-md text-sm leading-7 text-text-secondary">

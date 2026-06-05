@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import BrandLogo from "@/app/components/BrandLogo";
 
 const locations = {
   "New South Wales": [
@@ -61,20 +62,10 @@ export default function Header() {
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="group flex items-center gap-3"
+          className="group flex items-center"
           onClick={() => setMobileOpen(false)}
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-accent-gold/35 bg-accent-gold/10 font-heading text-lg font-bold text-accent-gold shadow-gold">
-            PG
-          </span>
-          <span className="leading-none">
-            <span className="block font-heading text-2xl font-bold text-gold-gradient">
-              Private Guys
-            </span>
-            <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.28em] text-text-muted group-hover:text-accent-gold">
-              Australia
-            </span>
-          </span>
+          <BrandLogo className="h-auto w-[184px] text-white transition-colors group-hover:text-accent-gold sm:w-[218px]" />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
