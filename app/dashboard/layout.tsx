@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Header } from '@/app/components/Header';
+import Header from '@/app/components/Header';
 
 interface SidebarItem {
   label: string;

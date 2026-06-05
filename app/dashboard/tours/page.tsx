@@ -226,7 +226,7 @@ export default function TourCalendarPage() {
       {tours.length === 0 && (
         <div className="text-center py-12">
           <p className="text-text-secondary text-lg">No tours scheduled yet</p>
-          <p className="text-text-secondary text-sm mt-2">Add a tour to let clients know when you're visiting their city</p>
+          <p className="text-text-secondary text-sm mt-2">Add a tour to let clients know when you&apos;re visiting their city</p>
         </div>
       )}
     </div>

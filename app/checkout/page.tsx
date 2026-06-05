@@ -199,7 +199,7 @@ export default function CheckoutPage() {
               <div className="space-y-4 mb-6 pb-6 border-b border-slate-600">
                 <div className="flex justify-between">
                   <span className="text-slate-400">{PRICING_TIERS[selectedTier].name} Subscription</span>
-                  <span>${((PRICING_TIERS[selectedTier].prices[billingCycle as keyof typeof PRICING_TIERS[typeof selectedTier].prices] as number) / 100).toFixed(2)}</span>
+                  <span>${((PRICING_TIERS[selectedTier].prices[billingCycle as any] as number) / 100).toFixed(2)}</span>
                 </div>
 
                 {selectedTier !== 'platinum' && selectedCities.length > 1 && (
