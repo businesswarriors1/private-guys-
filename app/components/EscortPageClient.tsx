@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import ListingCard from "@/app/components/cards/ListingCard";
-import type { Listing } from "@/app/data/mockListings";
+import type { Listing } from "@/app/types";
 
 interface EscortPageClientProps {
   cityName: string;
