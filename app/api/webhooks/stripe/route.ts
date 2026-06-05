@@ -1,4 +1,4 @@
-import { stripe } from '@/lib/stripe';
+import { getStripe } from '@/lib/stripe';
 import { NextRequest, NextResponse } from 'next/server';
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
@@ -12,6 +12,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.text();
+    const stripe = getStripe();
     const event = stripe.webhooks.constructEvent(body, signature, endpointSecret);
 
     // Handle different event types
