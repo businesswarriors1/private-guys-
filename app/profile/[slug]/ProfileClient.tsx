@@ -2,19 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Listing } from '@/app/types';
 import { mockListings } from '@/app/data/mockListings';
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
-const mockRelatedListings: Listing[] = mockListings.slice(3, 6);
-
-export default function ProfilePage({ params }: PageProps) {
-  const listing = mockListings.find((l) => l.slug === params.slug) || mockListings[0];
+export default function ProfileClient({ slug }: { slug: string }) {
+  const listing = mockListings.find((l) => l.slug === slug) || mockListings[0];
+  const mockRelatedListings = mockListings.slice(3, 6);
+  
   const [reportMessage, setReportMessage] = useState('');
   const [contactMessage, setContactMessage] = useState('');
 
@@ -41,18 +34,12 @@ export default function ProfilePage({ params }: PageProps) {
           alt={listing.displayName}
           className="w-full h-full object-cover"
         />
-
-        {/* Gallery Overlay Gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/80" />
-
-        {/* Verification Badge */}
         {listing.isVerified && (
           <div className="absolute top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-semibold">
             ✓ Verified
           </div>
         )}
-
-        {/* New Badge */}
         {listing.isNew && (
           <div className="absolute top-4 left-4 bg-accent-gold text-background px-4 py-2 rounded-lg flex items-center gap-2 font-semibold">
             🆕 New
@@ -113,7 +100,6 @@ export default function ProfilePage({ params }: PageProps) {
             <p className="text-text-secondary text-lg leading-relaxed mb-6">
               {listing.bio}
             </p>
-
             {listing.ratesText && (
               <>
                 <h3 className="text-lg font-semibold text-text-primary mb-2">Rates</h3>
@@ -142,14 +128,11 @@ export default function ProfilePage({ params }: PageProps) {
           {/* Contact Section */}
           <div className="glass-card-gold p-8 rounded-lg border border-border-gold mb-8">
             <h2 className="text-2xl font-semibold text-text-primary mb-6">Get In Touch</h2>
-
             {contactMessage && (
               <div className="bg-green-600/20 border border-green-600/50 text-green-400 p-4 rounded-lg mb-6 text-sm">
                 {contactMessage}
               </div>
             )}
-
-            {/* Phone - Gated by Tier */}
             <div className="mb-6 p-4 bg-background rounded-lg border border-border-default">
               <p className="text-text-secondary text-sm mb-2">Phone Number</p>
               {listing.tier === 'free' || listing.tier === 'standard' ? (
@@ -162,8 +145,6 @@ export default function ProfilePage({ params }: PageProps) {
                 </p>
               )}
             </div>
-
-            {/* Contact Buttons */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={handleContact}
@@ -215,7 +196,6 @@ export default function ProfilePage({ params }: PageProps) {
                   href={`/profile/${relatedListing.slug}`}
                   className="glass-card rounded-lg overflow-hidden border border-border-default hover:border-accent-gold transition-all hover-lift group"
                 >
-                  {/* Image */}
                   <div className="relative h-40 overflow-hidden bg-background-elevated">
                     <img
                       src={relatedListing.primaryImage || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop'}
@@ -228,8 +208,6 @@ export default function ProfilePage({ params }: PageProps) {
                       </div>
                     )}
                   </div>
-
-                  {/* Info */}
                   <div className="p-4">
                     <h3 className="font-semibold text-text-primary mb-1 group-hover:text-accent-gold transition-colors">
                       {relatedListing.displayName}
@@ -237,8 +215,6 @@ export default function ProfilePage({ params }: PageProps) {
                     <p className="text-text-secondary text-sm mb-3">
                       📍 {relatedListing.city}
                     </p>
-
-                    {/* Quick Tags */}
                     <div className="flex flex-wrap gap-2">
                       {relatedListing.services.slice(0, 2).map((service) => (
                         <span
