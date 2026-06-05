@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AgeGate from "@/app/components/AgeGate";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -10,6 +11,7 @@ import {
   getPremiumListings,
   getPlatinumListings,
 } from "@/app/data/mockListings";
+import { getAllBlogPosts } from "@/app/data/blogPosts";
 
 export const metadata = {
   title: "Private Guys Australia | Premier Male Companion Directory",
@@ -17,10 +19,34 @@ export const metadata = {
     "Australia's premier directory for male companions. Browse verified, professional male escorts and companions across Australia.",
 };
 
+const tierModel = [
+  {
+    tier: "Free",
+    title: "Entry listing",
+    body: "Basic presence at the bottom of city results, built to encourage upgrades.",
+  },
+  {
+    tier: "Standard",
+    title: "Thumbnail grid",
+    body: "Image, attributes and profile depth for advertisers ready to be compared.",
+  },
+  {
+    tier: "Premium",
+    title: "Priority visibility",
+    body: "Badged placement above standard listings with phone visibility.",
+  },
+  {
+    tier: "Platinum",
+    title: "Pinned spotlight",
+    body: "Top city placement and homepage rotation for the highest-value advertisers.",
+  },
+];
+
 export default function Home() {
   const newListings = getNewListings();
   const premiumListings = getPremiumListings();
   const platinumListings = getPlatinumListings();
+  const latestPosts = getAllBlogPosts().slice(0, 3);
 
   return (
     <>
@@ -29,83 +55,114 @@ export default function Home() {
       <main className="bg-background">
         <Hero />
 
+        <section className="relative bg-background py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-10 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+              <div>
+                <span className="section-subtitle">Placement ladder</span>
+                <h2 className="section-title mt-4">Visibility is the product.</h2>
+              </div>
+              <p className="max-w-2xl text-sm leading-6 text-text-secondary sm:text-base lg:justify-self-end">
+                The page now makes the business model obvious: verified
+                advertisers enter by tier, then move higher through paid city
+                placement.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-4">
+              {tierModel.map((item, index) => (
+                <div
+                  key={item.tier}
+                  className="relative min-h-52 overflow-hidden border border-white/10 bg-background-card p-5"
+                >
+                  <div className="absolute inset-x-0 top-0 h-1 bg-gradient-gold" />
+                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-accent-gold">
+                    0{index + 1} / {item.tier}
+                  </p>
+                  <h3 className="mt-5 font-heading text-2xl font-semibold text-text-primary">
+                    {item.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-6 text-text-secondary">
+                    {item.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <div id="listings">
           <ListingsRow
-            title="New Listings"
-            subtitle="Just Added"
+            title="New listings"
+            subtitle="Recently approved"
             listings={newListings}
             tier="new"
+            description="Fresh profiles entering the marketplace, surfaced first so returning visitors see what changed."
           />
 
           <ListingsRow
-            title="Premium Companions"
-            subtitle="Verified & Professional"
+            title="Premium companions"
+            subtitle="Paid visibility"
             listings={premiumListings}
             tier="premium"
+            description="Premium profiles sit above standard results and carry stronger trust cues, direct contact display and richer cards."
           />
 
           <ListingsRow
-            title="Platinum Elite"
-            subtitle="Top Tier"
+            title="Platinum elite"
+            subtitle="Pinned spotlight"
             listings={platinumListings}
             tier="platinum"
+            description="The top tier is treated as a spotlight product: larger cards, stronger gold treatment and the clearest path to profile views."
           />
         </div>
 
         <BrowseByState />
-
         <AboutSection />
 
-        {/* Blog Section */}
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-8">
+        <section className="bg-background py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <span className="section-subtitle">Latest</span>
-                <h2 className="section-title">From The Blog</h2>
+                <span className="section-subtitle">Latest editorial</span>
+                <h2 className="section-title mt-4">Guides for safer browsing.</h2>
               </div>
-              <a
+              <Link
                 href="/blog"
-                className="text-accent-gold hover:text-accent-gold-light text-sm font-medium"
+                className="inline-flex w-fit rounded-full border border-white/15 px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-text-secondary transition-colors hover:border-accent-gold hover:text-accent-gold"
               >
-                View All →
-              </a>
+                View all posts
+              </Link>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  title: "How to Choose the Right Companion",
-                  excerpt:
-                    "A guide to finding the perfect companion for your needs and preferences.",
-                  date: "June 1, 2024",
-                },
-                {
-                  title: "Etiquette for First-Time Clients",
-                  excerpt:
-                    "Essential tips for making your first experience smooth and enjoyable.",
-                  date: "May 28, 2024",
-                },
-                {
-                  title: "Understanding Verification",
-                  excerpt:
-                    "Why we verify all advertisers and what it means for your safety.",
-                  date: "May 25, 2024",
-                },
-              ].map((post, i) => (
-                <article
-                  key={i}
-                  className="glass-card rounded-xl p-6 hover:border-accent-gold transition-colors cursor-pointer"
+            <div className="grid gap-6 md:grid-cols-3">
+              {latestPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group relative min-h-80 overflow-hidden border border-white/10 bg-background-card p-6 transition duration-300 hover:-translate-y-1 hover:border-accent-gold/55 hover:shadow-elevated"
                 >
-                  <span className="text-text-muted text-xs">{post.date}</span>
-                  <h3 className="text-text-primary font-semibold text-lg mt-2 mb-3 hover:text-accent-gold transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-text-secondary text-sm">{post.excerpt}</p>
-                  <span className="text-accent-gold text-sm mt-4 inline-block">
-                    Read More →
-                  </span>
-                </article>
+                  <div
+                    className="absolute inset-0 opacity-[0.22] transition-opacity group-hover:opacity-30"
+                    style={{
+                      backgroundImage: `url(${post.featuredImage})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/40" />
+                  <div className="relative flex min-h-[17rem] flex-col">
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-accent-gold">
+                      {post.category} / {post.readTime} min
+                    </span>
+                    <h3 className="mt-auto font-heading text-3xl font-semibold leading-tight text-text-primary transition-colors group-hover:text-accent-gold">
+                      {post.title}
+                    </h3>
+                    <p className="mt-4 text-sm leading-6 text-text-secondary">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>

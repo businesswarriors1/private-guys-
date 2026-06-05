@@ -1,46 +1,65 @@
 import Link from "next/link";
+import { australianLocations } from "@/app/types";
 
-const states = [
-  { name: "New South Wales", image: "/images/states/nsw.jpg", slug: "new-south-wales" },
-  { name: "Queensland", image: "/images/states/qld.jpg", slug: "queensland" },
-  { name: "Victoria", image: "/images/states/vic.jpg", slug: "victoria" },
-  { name: "Western Australia", image: "/images/states/wa.jpg", slug: "western-australia" },
-  { name: "South Australia", image: "/images/states/sa.jpg", slug: "south-australia" },
-  { name: "Tasmania", image: "/images/states/tas.jpg", slug: "tasmania" },
-  { name: "Northern Territory", image: "/images/states/nt.jpg", slug: "northern-territory" },
-  { name: "ACT", image: "/images/states/act.jpg", slug: "act" },
-];
+function toSlug(value: string) {
+  return value.toLowerCase().replace(/\s+/g, "-");
+}
 
 export default function BrowseByState() {
   return (
-    <section className="py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <span className="section-subtitle">Explore</span>
-          <h2 className="section-title">Browse By State</h2>
+    <section className="relative overflow-hidden bg-background py-20">
+      <div className="absolute inset-x-0 top-0">
+        <div className="metal-rule" />
+      </div>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 grid gap-6 lg:grid-cols-[0.8fr_1fr] lg:items-end">
+          <div>
+            <span className="section-subtitle">Location network</span>
+            <h2 className="section-title mt-4">Browse by state.</h2>
+          </div>
+          <p className="max-w-2xl text-sm leading-6 text-text-secondary sm:text-base lg:justify-self-end">
+            Match the PrivateGirls geography model: state first, city second,
+            then tiered placement inside each result set.
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {states.map((state) => (
-            <Link
-              key={state.slug}
-              href={`/location/${state.slug}`}
-              className="group relative aspect-[4/3] rounded-xl overflow-hidden glass-card hover:border-accent-gold transition-colors"
-            >
-              {/* Placeholder Gradient Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-background-elevated to-background-card group-hover:from-background-elevated/80 group-hover:to-background/80 transition-colors" />
-              
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                <h3 className="text-text-primary font-heading font-semibold text-lg text-center group-hover:text-accent-gold transition-colors">
-                  {state.name}
-                </h3>
-                <span className="text-text-muted text-xs mt-2 group-hover:text-accent-gold-light transition-colors">
-                  View Listings →
-                </span>
-              </div>
-            </Link>
-          ))}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {australianLocations.map((location, index) => {
+            const featuredCity = location.cities[0];
+            return (
+              <Link
+                key={location.state}
+                href={`/location/${toSlug(location.state)}`}
+                className="group relative min-h-56 overflow-hidden border border-white/10 bg-background-card p-5 transition duration-300 hover:-translate-y-1 hover:border-accent-gold/60 hover:shadow-elevated"
+              >
+                <div
+                  className="absolute inset-0 opacity-80 transition-opacity group-hover:opacity-100"
+                  style={{
+                    background:
+                      index % 2 === 0
+                        ? "radial-gradient(circle at 20% 0%, rgba(197,81,208,0.26), transparent 13rem), linear-gradient(145deg, rgba(22,13,30,0.74), rgba(0,0,0,0.92))"
+                        : "radial-gradient(circle at 80% 0%, rgba(224,64,200,0.22), transparent 13rem), linear-gradient(145deg, rgba(201,168,76,0.1), rgba(0,0,0,0.94))",
+                  }}
+                />
+                <div className="relative flex h-full flex-col">
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-accent-gold">
+                    {location.cities.length} cities
+                  </span>
+                  <h3 className="mt-5 font-heading text-3xl font-semibold leading-tight text-text-primary">
+                    {location.state}
+                  </h3>
+                  <p className="mt-4 text-sm leading-6 text-text-secondary">
+                    Start with {featuredCity}
+                    {location.cities[1] ? `, ${location.cities[1]}` : ""} and
+                    nearby regions.
+                  </p>
+                  <span className="mt-auto pt-8 text-xs font-bold uppercase tracking-[0.18em] text-accent-gold">
+                    View listings
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

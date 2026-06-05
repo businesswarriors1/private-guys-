@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import AgeGate from "@/app/components/AgeGate";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { mockListings } from "@/app/data/mockListings";
 import ListingCard from "@/app/components/cards/ListingCard";
+import { australianLocations } from "@/app/types";
 
 interface EscortsPageProps {
   params: {
@@ -11,29 +13,21 @@ interface EscortsPageProps {
   };
 }
 
-const cities = [
-  "Sydney",
-  "Melbourne",
-  "Brisbane",
-  "Perth",
-  "Adelaide",
-  "Hobart",
-  "Canberra",
-  "Darwin",
-  "Gold Coast",
-  "Newcastle",
-  "Wollongong",
-  "Logan City",
-  "Geelong",
-];
+const cities = australianLocations.flatMap((location) => location.cities);
+
+function toSlug(value: string) {
+  return value.toLowerCase().replace(/\s+/g, "-");
+}
+
+function getCityName(slug: string) {
+  const decodedCity = decodeURIComponent(slug.replace(/-/g, " "));
+  return cities.find((c) => c.toLowerCase() === decodedCity.toLowerCase());
+}
 
 export async function generateMetadata({
   params,
 }: EscortsPageProps): Promise<Metadata> {
-  const decodedCity = decodeURIComponent(params.city.replace(/-/g, " "));
-  const cityName =
-    cities.find((c) => c.toLowerCase() === decodedCity.toLowerCase()) ||
-    decodedCity;
+  const cityName = getCityName(params.city) || decodeURIComponent(params.city.replace(/-/g, " "));
 
   return {
     title: `Male Escorts in ${cityName} | Private Guys Australia`,
@@ -55,6 +49,12 @@ export async function generateMetadata({
 
 export const dynamicParams = true;
 
+export function generateStaticParams() {
+  return cities.map((city) => ({
+    city: toSlug(city),
+  }));
+}
+
 export default function EscortsPage({
   params,
 }: EscortsPageProps) {
@@ -65,7 +65,7 @@ export default function EscortsPage({
 
   // Filter listings by city
   const listings = mockListings.filter((listing) =>
-    listing.location.toLowerCase().includes(decodedCity.toLowerCase())
+    listing.city.toLowerCase() === cityName.toLowerCase()
   );
 
   if (listings.length === 0 && !cities.some((c) => c.toLowerCase() === decodedCity.toLowerCase())) {
@@ -74,6 +74,7 @@ export default function EscortsPage({
 
   return (
     <>
+      <AgeGate />
       <Header />
       <main className="min-h-screen bg-gradient-to-b from-background via-background to-accent-gold/5 pt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -161,7 +162,7 @@ export default function EscortsPage({
               </h2>
               <div className="space-y-4 text-text-secondary">
                 <p>
-                  Welcome to Private Guys Australia, your premier directory for verified male escorts in {cityName}. Whether you're looking for a professional escort service for companionship, events, or special occasions, we have a selection of verified male escorts to meet your needs.
+                  Welcome to Private Guys Australia, your premier directory for verified male escorts in {cityName}. Whether you are looking for a professional escort service for companionship, events, or special occasions, we have a selection of verified male escorts to meet your needs.
                 </p>
                 <p>
                   All our escorts are thoroughly verified and committed to providing a professional, discreet, and enjoyable experience. Our directory features only the most professional and reliable male escorts in {cityName} who have passed our comprehensive verification process.

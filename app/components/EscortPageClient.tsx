@@ -7,7 +7,6 @@ import type { Listing } from "@/app/types";
 interface EscortPageClientProps {
   cityName: string;
   listings: Listing[];
-  city: string;
 }
 
 const container = {
@@ -23,7 +22,6 @@ const container = {
 export default function EscortPageClient({
   cityName,
   listings,
-  city,
 }: EscortPageClientProps) {
   return (
     <>
@@ -104,7 +102,7 @@ export default function EscortPageClient({
           </h2>
           <div className="space-y-4 text-text-secondary">
             <p>
-              Welcome to Private Guys Australia, your premier directory for verified male escorts in {cityName}. Whether you're looking for a professional escort service for companionship, events, or special occasions, we have a selection of verified male escorts to meet your needs.
+              Welcome to Private Guys Australia, your premier directory for verified male escorts in {cityName}. Whether you are looking for a professional escort service for companionship, events, or special occasions, we have a selection of verified male escorts to meet your needs.
             </p>
             <p>
               All our escorts are thoroughly verified and committed to providing a professional, discreet, and enjoyable experience. Our directory features only the most professional and reliable male escorts in {cityName} who have passed our comprehensive verification process.

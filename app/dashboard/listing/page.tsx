@@ -84,12 +84,16 @@ export default function ListingEditPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>, asDraft: boolean = false) => {
-    e.preventDefault();
+  const saveListing = (asDraft: boolean = false) => {
     if (!asDraft && !validateForm()) return;
 
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    saveListing(false);
   };
 
   return (
@@ -105,7 +109,7 @@ export default function ListingEditPage() {
         </div>
       )}
 
-      <form onSubmit={(e) => handleSubmit(e, false)} className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-8">
         {/* Basic Info Section */}
         <section className="glass-card p-8 rounded-lg border border-border-default">
           <h2 className="text-xl font-semibold text-text-primary mb-6 pb-4 border-b border-border-default">
@@ -323,7 +327,7 @@ export default function ListingEditPage() {
         <div className="flex gap-4 pt-4">
           <button
             type="button"
-            onClick={(e) => handleSubmit(e as any, true)}
+            onClick={() => saveListing(true)}
             className="flex-1 px-6 py-3 rounded-lg border border-border-default text-text-primary hover:border-accent-gold hover:text-accent-gold transition-colors duration-200 font-medium"
           >
             Save as Draft

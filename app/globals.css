@@ -5,17 +5,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --background: #0a0a0a;
-  --background-card: #1a1a1a;
-  --background-elevated: #252525;
-  --accent-gold: #c9a227;
-  --accent-gold-light: #e0c158;
-  --accent-gold-dark: #9a7b1a;
-  --secondary-wine: #8b2635;
-  --text-primary: #f5f5f5;
-  --text-secondary: #888888;
-  --border-default: #333333;
-  --border-gold: #c9a227;
+  --background: #111111;
+  --background-card: #171717;
+  --background-elevated: #313131;
+  --background-ink: #000000;
+  --accent-gold: #c551d0;
+  --accent-gold-light: #e040c8;
+  --accent-gold-dark: #9616a3;
+  --accent-metal: #c9a84c;
+  --accent-metal-dark: #9a7830;
+  --secondary-wine: #160d1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b5b5b5;
+  --border-default: #454545;
+  --border-gold: #c551d0;
 }
 
 * {
@@ -33,6 +36,11 @@ body {
 
 body {
   background: var(--background);
+  color: var(--text-primary);
+}
+
+body::selection {
+  background: rgba(197, 81, 208, 0.32);
   color: var(--text-primary);
 }
 
@@ -57,28 +65,114 @@ body {
 
 /* Glass Card Effect */
 .glass-card {
-  background: rgba(26, 26, 26, 0.9);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(51, 51, 51, 0.5);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01)),
+    rgba(18, 18, 18, 0.92);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card-gold {
-  background: rgba(26, 26, 26, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(201, 162, 39, 0.3);
+  background:
+    linear-gradient(145deg, rgba(197, 81, 208, 0.14), rgba(22, 13, 30, 0.78)),
+    rgba(17, 17, 17, 0.94);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(197, 81, 208, 0.32);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 /* Gold Gradient Text */
 .text-gold-gradient {
-  background: linear-gradient(135deg, #c9a227 0%, #e0c158 50%, #9a7b1a 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #e040c8 42%, #c551d0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+.text-metal-gradient {
+  background: linear-gradient(135deg, #fff0a8 0%, #c9a84c 50%, #9a7830 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.premium-shell {
+  position: relative;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(197, 81, 208, 0.2), transparent 32rem),
+    radial-gradient(circle at 86% 12%, rgba(224, 64, 200, 0.12), transparent 34rem),
+    linear-gradient(180deg, #000000 0%, #111111 46%, #000000 100%);
+}
+
+.premium-shell::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 72%, transparent 100%);
+}
+
+.brand-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--accent-gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.brand-kicker::before {
+  content: "";
+  width: 1.65rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold));
+}
+
+.metal-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(197, 81, 208, 0.42),
+    rgba(201, 168, 76, 0.28),
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+}
+
+.luxury-panel {
+  background:
+    linear-gradient(145deg, rgba(197, 81, 208, 0.12), rgba(22, 13, 30, 0.78) 50%, rgba(255, 255, 255, 0.025)),
+    rgba(15, 10, 20, 0.92);
+  border: 1px solid rgba(197, 81, 208, 0.28);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(22px);
+}
+
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 /* Premium Border Glow */
 .border-glow {
-  box-shadow: 0 0 20px rgba(201, 162, 39, 0.2);
+  box-shadow: 0 0 20px rgba(197, 81, 208, 0.22);
 }
 
 /* Hero Video Background */
@@ -142,11 +236,11 @@ body {
 
 /* Section Headers */
 .section-title {
-  @apply text-2xl md:text-3xl font-heading font-semibold text-text-primary;
+  @apply text-3xl md:text-5xl font-heading font-semibold text-text-primary tracking-tight;
 }
 
 .section-subtitle {
-  @apply text-text-secondary text-sm uppercase tracking-widest;
+  @apply brand-kicker;
 }
 
 /* Card Hover States */

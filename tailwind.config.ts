@@ -10,34 +10,38 @@ const config: Config = {
     extend: {
       colors: {
         background: {
-          DEFAULT: "#0a0a0a",
-          card: "#1a1a1a",
-          elevated: "#252525",
+          DEFAULT: "#111111",
+          ink: "#000000",
+          card: "#171717",
+          elevated: "#313131",
         },
         accent: {
-          gold: "#c9a227",
-          "gold-light": "#e0c158",
-          "gold-dark": "#9a7b1a",
+          gold: "#c551d0",
+          "gold-light": "#e040c8",
+          "gold-dark": "#9616a3",
+          metal: "#c9a84c",
+          "metal-dark": "#9a7830",
         },
         secondary: {
-          wine: "#8b2635",
-          "wine-dark": "#5c181f",
+          wine: "#160d1e",
+          "wine-dark": "#0f0a14",
         },
         text: {
-          primary: "#f5f5f5",
-          secondary: "#888888",
-          muted: "#666666",
+          primary: "#ffffff",
+          secondary: "#b5b5b5",
+          muted: "#929495",
         },
         border: {
-          DEFAULT: "#333333",
-          gold: "#c9a227",
+          DEFAULT: "#454545",
+          gold: "#c551d0",
+          metal: "#c9a84c",
           subtle: "#2a2a2a",
         },
         tier: {
           free: "#666666",
           standard: "#888888",
-          premium: "#c9a227",
-          platinum: "#8b2635",
+          premium: "#c551d0",
+          platinum: "#c9a84c",
           new: "#22c55e",
           verified: "#3b82f6",
         },
@@ -49,13 +53,16 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-gold":
-          "linear-gradient(135deg, #c9a227 0%, #e0c158 50%, #9a7b1a 100%)",
+          "linear-gradient(135deg, #c551d0 0%, #e040c8 52%, #9616a3 100%)",
+        "gradient-metal":
+          "linear-gradient(135deg, #fff0a8 0%, #c9a84c 48%, #9a7830 100%)",
         "gradient-wine":
-          "linear-gradient(135deg, #8b2635 0%, #5c181f 100%)",
+          "linear-gradient(135deg, #160d1e 0%, #0f0a14 100%)",
       },
       boxShadow: {
-        gold: "0 0 20px rgba(201, 162, 39, 0.3)",
-        "gold-lg": "0 0 40px rgba(201, 162, 39, 0.4)",
+        gold: "0 0 20px rgba(197, 81, 208, 0.28)",
+        "gold-lg": "0 0 40px rgba(197, 81, 208, 0.36)",
+        metal: "0 0 22px rgba(201, 168, 76, 0.35)",
         card: "0 4px 20px rgba(0, 0, 0, 0.3)",
         elevated: "0 8px 40px rgba(0, 0, 0, 0.4)",
       },

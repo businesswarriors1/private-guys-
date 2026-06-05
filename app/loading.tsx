@@ -3,17 +3,6 @@
 import { motion } from "framer-motion";
 
 export default function Loading() {
-  const shimmer = {
-    animate: {
-      backgroundPosition: ["200% 0", "-200% 0"],
-    },
-    transition: {
-      duration: 2,
-      repeat: Infinity,
-      ease: "linear",
-    },
-  };
-
   return (
     <div className="min-h-screen bg-background pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

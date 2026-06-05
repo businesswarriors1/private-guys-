@@ -3,20 +3,18 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import ListingCard from "@/app/components/cards/ListingCard";
 import { mockListings } from "@/app/data/mockListings";
+import { australianLocations } from "@/app/types";
 import { notFound } from "next/navigation";
 
-const validCities = [
-  "sydney",
-  "melbourne",
-  "brisbane",
-  "perth",
-  "adelaide",
-  "gold-coast",
-  "newcastle",
-  "canberra",
-  "hobart",
-  "darwin",
-];
+const validCities = australianLocations.flatMap((location) => location.cities);
+
+function toSlug(value: string) {
+  return value.toLowerCase().replace(/\s+/g, "-");
+}
+
+function getCityBySlug(slug: string) {
+  return validCities.find((city) => toSlug(city) === slug);
+}
 
 interface Props {
   params: {
@@ -25,14 +23,11 @@ interface Props {
 }
 
 export function generateStaticParams() {
-  return validCities.map((city) => ({ city }));
+  return validCities.map((city) => ({ city: toSlug(city) }));
 }
 
 export function generateMetadata({ params }: Props) {
-  const cityName = params.city
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  const cityName = getCityBySlug(params.city.toLowerCase()) || "Australia";
 
   return {
     title: `Male Companions in ${cityName} | Private Guys Australia`,
@@ -42,15 +37,11 @@ export function generateMetadata({ params }: Props) {
 
 export default function CityPage({ params }: Props) {
   const citySlug = params.city.toLowerCase();
+  const cityName = getCityBySlug(citySlug);
 
-  if (!validCities.includes(citySlug)) {
+  if (!cityName) {
     notFound();
   }
-
-  const cityName = citySlug
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
 
   // Get listings for this city
   const cityListings = mockListings.filter(
@@ -87,10 +78,10 @@ export default function CityPage({ params }: Props) {
             {platinumListings.length > 0 && (
               <div className="mb-12">
                 <div className="flex items-center gap-3 mb-6">
-                  <h2 className="text-2xl font-heading font-semibold text-gold-gradient">
+                  <h2 className="text-2xl font-heading font-semibold text-metal-gradient">
                     Platinum Elite
                   </h2>
-                  <span className="bg-gradient-gold text-background text-xs font-bold px-2 py-1 rounded">
+                  <span className="bg-gradient-metal text-background text-xs font-bold px-2 py-1 rounded">
                     PLATINUM
                   </span>
                 </div>

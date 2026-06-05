@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -16,6 +16,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  useEffect(() => {
+    if (pathname !== '/admin/login' && !document.cookie.includes('admin_token=')) {
+      router.push('/admin/login');
+    }
+  }, [pathname, router]);
+
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
+  }
 
   const handleLogout = () => {
     document.cookie = 'admin_token=; path=/; max-age=0';

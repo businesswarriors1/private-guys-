@@ -3,118 +3,151 @@
 import { useState } from "react";
 import { australianLocations } from "@/app/types";
 
+const heroStats = [
+  { label: "Verified-first", value: "18+" },
+  { label: "Australian locations", value: "45+" },
+  { label: "Placement tiers", value: "4" },
+];
+
+function toSlug(value: string) {
+  return value.toLowerCase().replace(/\s+/g, "-");
+}
+
 export default function Hero() {
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
-  const stateOptions = australianLocations.map((loc) => loc.state);
   const cityOptions = selectedState
     ? australianLocations.find((loc) => loc.state === selectedState)?.cities || []
     : [];
 
-  const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedState(e.target.value);
-    setSelectedCity("");
-  };
-
   const handleSearch = () => {
     if (selectedCity) {
-      window.location.href = `/${selectedCity.toLowerCase().replace(/\s+/g, "-")}`;
+      window.location.href = `/${toSlug(selectedCity)}`;
     }
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Video Placeholder */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background-elevated to-background">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent-gold/5 via-transparent to-transparent" />
-      </div>
+    <section className="premium-shell relative min-h-[92vh] overflow-hidden pt-28">
+      <div
+        className="absolute inset-0 opacity-[0.34]"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2200&q=80')",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+        aria-hidden
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/65 via-background/88 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-r from-secondary-wine/45 via-transparent to-accent-gold/14" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
-        <div className="mb-8">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold mb-4">
-            <span className="text-gold-gradient">Private</span>
-            <span className="text-text-primary"> Guys</span>
+      <div className="relative z-10 mx-auto grid min-h-[calc(92vh-7rem)] max-w-7xl items-center gap-12 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+        <div>
+          <span className="brand-kicker">PrivateGuys.com.au</span>
+          <h1 className="mt-7 max-w-4xl font-heading text-5xl font-semibold leading-[0.95] tracking-tight text-text-primary sm:text-7xl lg:text-8xl">
+            Verified male companion advertising across Australia.
           </h1>
-          <p className="text-xl md:text-2xl text-text-secondary font-light">
-            Australia&apos;s Premier Male Companion Directory
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-text-secondary">
+            A premium classified directory for independent adult advertisers,
+            designed around location, verification and paid placement.
           </p>
+
+          <div className="mt-9 grid max-w-2xl grid-cols-3 border-y border-white/10">
+            {heroStats.map((stat) => (
+              <div key={stat.label} className="border-r border-white/10 py-5 last:border-r-0">
+                <p className="font-heading text-3xl font-semibold text-gold-gradient sm:text-4xl">
+                  {stat.value}
+                </p>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-text-muted">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="glass-card-gold rounded-2xl p-6 md:p-8 max-w-2xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-4 mb-4">
+        <div className="luxury-panel p-5 sm:p-7">
+          <div className="flex items-start justify-between gap-5 border-b border-white/10 pb-6">
             <div>
-              <label className="block text-text-muted text-sm mb-2 text-left">State</label>
+              <span className="brand-kicker">Start by location</span>
+              <h2 className="mt-4 font-heading text-3xl font-semibold text-text-primary sm:text-4xl">
+                Browse verified listings.
+              </h2>
+            </div>
+            <div className="hidden rounded-full border border-accent-gold/35 px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-accent-gold sm:block">
+              18+ only
+            </div>
+          </div>
+
+          <div className="mt-7 grid gap-4">
+            <label className="grid gap-2">
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
+                State or territory
+              </span>
               <select
                 value={selectedState}
-                onChange={handleStateChange}
-                className="w-full bg-background-elevated border border-border-default rounded-lg px-4 py-3 text-text-primary focus:border-accent-gold focus:outline-none"
+                onChange={(event) => {
+                  setSelectedState(event.target.value);
+                  setSelectedCity("");
+                }}
+                className="h-14 w-full rounded-xl border border-white/10 bg-background-elevated px-4 text-text-primary outline-none transition-colors focus:border-accent-gold"
               >
-                <option value="">Select State</option>
-                {stateOptions.map((state) => (
-                  <option key={state} value={state}>
-                    {state}
+                <option value="">Select state</option>
+                {australianLocations.map((location) => (
+                  <option key={location.state} value={location.state}>
+                    {location.state}
                   </option>
                 ))}
               </select>
-            </div>
+            </label>
 
-            <div>
-              <label className="block text-text-muted text-sm mb-2 text-left">City</label>
+            <label className="grid gap-2">
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
+                City or region
+              </span>
               <select
                 value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
+                onChange={(event) => setSelectedCity(event.target.value)}
                 disabled={!selectedState}
-                className="w-full bg-background-elevated border border-border-default rounded-lg px-4 py-3 text-text-primary focus:border-accent-gold focus:outline-none disabled:opacity-50"
+                className="h-14 w-full rounded-xl border border-white/10 bg-background-elevated px-4 text-text-primary outline-none transition-colors focus:border-accent-gold disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <option value="">Select City</option>
+                <option value="">Select city</option>
                 {cityOptions.map((city) => (
                   <option key={city} value={city}>
                     {city}
                   </option>
                 ))}
               </select>
+            </label>
+
+            <div className="grid gap-3 pt-2 sm:grid-cols-[1fr_auto]">
+              <button
+                onClick={handleSearch}
+                disabled={!selectedCity}
+                className="h-14 rounded-full bg-accent-gold px-7 text-sm font-bold uppercase tracking-[0.16em] text-background transition-colors hover:bg-accent-gold-light disabled:cursor-not-allowed disabled:bg-text-muted"
+              >
+                Search companions
+              </button>
+              <a
+                href="/search"
+                className="inline-flex h-14 items-center justify-center rounded-full border border-white/15 px-7 text-sm font-bold uppercase tracking-[0.16em] text-text-primary transition-colors hover:border-accent-gold hover:text-accent-gold"
+              >
+                Advanced
+              </a>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
-            <button
-              onClick={handleSearch}
-              disabled={!selectedCity}
-              className="flex-1 bg-accent-gold hover:bg-accent-gold-light disabled:bg-text-muted disabled:cursor-not-allowed text-background font-semibold py-3 px-6 rounded-lg transition-colors"
-            >
-              Search Companions
-            </button>
-            <a
-              href="/search"
-              className="flex-1 border border-text-secondary hover:border-accent-gold hover:text-accent-gold text-text-secondary font-medium py-3 px-6 rounded-lg transition-colors"
-            >
-              Advanced Search
-            </a>
+          <div className="mt-7 grid gap-3 border-t border-white/10 pt-6 sm:grid-cols-3">
+            {["New listings", "Premium first", "Platinum spotlight"].map((item) => (
+              <div key={item} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                <p className="text-sm font-semibold text-text-primary">{item}</p>
+                <p className="mt-2 text-xs leading-5 text-text-muted">
+                  Placement that mirrors the PrivateGirls tier model.
+                </p>
+              </div>
+            ))}
           </div>
-        </div>
-
-        <div className="mt-12">
-          <a
-            href="#listings"
-            className="inline-flex flex-col items-center text-text-muted hover:text-accent-gold transition-colors"
-          >
-            <span className="text-sm mb-2">Scroll to explore</span>
-            <svg
-              className="w-6 h-6 animate-bounce"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-          </a>
         </div>
       </div>
     </section>

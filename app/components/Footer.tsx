@@ -12,103 +12,110 @@ const quickLinks = {
 };
 
 const legalLinks = [
-  { href: "/legal/privacy", label: "Privacy Statement" },
+  { href: "/legal/privacy", label: "Privacy" },
   { href: "/legal/copyright", label: "Copyright" },
   { href: "/legal/disclaimer", label: "Disclaimer" },
-  { href: "/legal/acceptable-use", label: "Acceptable Usage" },
-  { href: "/legal/terms", label: "Terms & Conditions" },
+  { href: "/legal/acceptable-use", label: "Acceptable Use" },
+  { href: "/legal/terms", label: "Terms" },
 ];
+
+function toSlug(value: string) {
+  return value.toLowerCase().replace(/\s+/g, "-");
+}
 
 export default function Footer() {
   return (
-    <footer className="bg-background border-t border-border-default mt-20">
-      {/* Quick Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
-          {Object.entries(quickLinks).map(([state, cities]) => (
-            <div key={state}>
-              <h4 className="text-accent-gold font-semibold text-xs uppercase tracking-wider mb-3">
-                {state}
-              </h4>
-              <ul className="space-y-1">
-                {cities.map((city) => (
-                  <li key={city}>
-                    <Link
-                      href={`/${city.toLowerCase()}`}
-                      className="text-text-muted hover:text-text-primary text-xs transition-colors"
-                    >
-                      {city}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
+    <footer className="relative overflow-hidden border-t border-white/10 bg-background-ink">
+      <div
+        className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(197,81,208,0.15),transparent_28rem),radial-gradient(circle_at_86%_48%,rgba(201,168,76,0.1),transparent_26rem)]"
+        aria-hidden
+      />
 
-      {/* Main Footer */}
-      <div className="border-t border-border-default">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            {/* Logo */}
-            <div className="flex items-center space-x-2">
-              <span className="text-xl font-heading font-bold text-gold-gradient">
-                Private
+      <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div>
+            <Link href="/" className="inline-flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-accent-gold/35 bg-accent-gold/10 font-heading font-bold text-accent-gold">
+                PG
               </span>
-              <span className="text-xl font-heading font-bold text-text-primary">
-                Guys
+              <span>
+                <span className="block font-heading text-3xl font-bold text-gold-gradient">
+                  Private Guys
+                </span>
+                <span className="mt-1 block text-xs font-bold uppercase tracking-[0.22em] text-text-muted">
+                  Classified advertising platform
+                </span>
               </span>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center space-x-4">
-              <a
-                href="#"
-                className="text-text-muted hover:text-accent-gold transition-colors"
-                aria-label="Twitter"
+            </Link>
+            <p className="mt-6 max-w-md text-sm leading-7 text-text-secondary">
+              A national adult directory for independent verified advertisers.
+              Built on the PrivateGirls structure with a distinct male-companion
+              brand expression.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link
+                href="/register"
+                className="rounded-full bg-accent-gold px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-background transition-colors hover:bg-accent-gold-light"
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="text-text-muted hover:text-accent-gold transition-colors"
-                aria-label="Instagram"
+                Advertise
+              </Link>
+              <Link
+                href="/search"
+                className="rounded-full border border-white/15 px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-text-secondary transition-colors hover:border-accent-gold hover:text-accent-gold"
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4-.2 6.78-2.618 6.98-6.98.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.667-.072-4.947-.2-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg>
-              </a>
+                Browse
+              </Link>
             </div>
-
-            {/* Legal Links */}
-            <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              {legalLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-text-muted hover:text-text-primary text-xs transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
           </div>
 
-          {/* Copyright & Notice */}
-          <div className="mt-8 pt-8 border-t border-border-default text-center">
-            <p className="text-text-muted text-xs mb-2">
-              © {new Date().getFullYear()} Private Guys Australia. All rights reserved.
-            </p>
-            <p className="text-text-muted text-xs">
-              This website contains adult content. You must be 18 years or older to enter.
-              This site provides classified advertising space only and does not employ,
-              represent, or manage any advertiser.
-            </p>
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+            {Object.entries(quickLinks).map(([state, cities]) => (
+              <div key={state}>
+                <h4 className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-accent-gold">
+                  {state}
+                </h4>
+                <ul className="space-y-2">
+                  {cities.map((city) => (
+                    <li key={city}>
+                      <Link
+                        href={`/${toSlug(city)}`}
+                        className="text-sm text-text-muted transition-colors hover:text-text-primary"
+                      >
+                        {city}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
+
+        <div className="my-10 metal-rule" />
+
+        <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+          <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Legal">
+            {legalLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted transition-colors hover:text-accent-gold"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <p className="text-xs text-text-muted">
+            © {new Date().getFullYear()} Private Guys Australia. 18+ only.
+          </p>
+        </div>
+
+        <p className="mt-6 max-w-5xl text-xs leading-6 text-text-muted">
+          This website contains adult content. Private Guys provides classified
+          advertising space only and does not employ, represent, manage, broker
+          or facilitate transactions between any advertiser and client.
+        </p>
       </div>
     </footer>
   );

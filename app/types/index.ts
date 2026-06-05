@@ -223,7 +223,7 @@ export interface DBModerationItem {
   content_type: 'listing' | 'photo' | 'user' | 'report'
   content_id: string
   status: 'pending' | 'approved' | 'rejected'
-  flags?: Record<string, any>
+  flags?: Record<string, unknown>
   created_at: string
   updated_at: string
 }

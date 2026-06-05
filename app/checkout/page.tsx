@@ -72,15 +72,19 @@ export default function CheckoutPage() {
 
   const price = calculatePrice();
   const priceInDollars = (price / 100).toFixed(2);
+  const selectedBasePrice =
+    selectedTier && selectedTier !== 'platinum'
+      ? PRICING_TIERS[selectedTier].prices[billingCycle]
+      : 0;
   const billingLabel =
     billingCycle === 'annual' ? '/year' : billingCycle === 'quarterly' ? '/quarter' : '/month';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white py-12 px-4">
+    <div className="premium-shell min-h-screen py-12 px-4 text-text-primary">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Choose Your Plan</h1>
-          <p className="text-xl text-slate-300">
+          <p className="text-xl text-text-secondary">
             Professional listing and profile management for Private Guys Australia
           </p>
         </div>
@@ -90,7 +94,7 @@ export default function CheckoutPage() {
           <button
             onClick={() => setBillingCycle('monthly')}
             className={`px-6 py-2 rounded-lg font-semibold transition ${
-              billingCycle === 'monthly' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              billingCycle === 'monthly' ? 'bg-accent-gold text-background' : 'bg-background-card text-text-secondary hover:bg-background-elevated'
             }`}
           >
             Monthly
@@ -98,7 +102,7 @@ export default function CheckoutPage() {
           <button
             onClick={() => setBillingCycle('quarterly')}
             className={`px-6 py-2 rounded-lg font-semibold transition ${
-              billingCycle === 'quarterly' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              billingCycle === 'quarterly' ? 'bg-accent-gold text-background' : 'bg-background-card text-text-secondary hover:bg-background-elevated'
             }`}
           >
             Quarterly
@@ -106,7 +110,7 @@ export default function CheckoutPage() {
           <button
             onClick={() => setBillingCycle('annual')}
             className={`px-6 py-2 rounded-lg font-semibold transition ${
-              billingCycle === 'annual' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              billingCycle === 'annual' ? 'bg-accent-gold text-background' : 'bg-background-card text-text-secondary hover:bg-background-elevated'
             }`}
           >
             Annual
@@ -119,20 +123,20 @@ export default function CheckoutPage() {
             <div
               key={key}
               className={`rounded-lg p-8 transition cursor-pointer border-2 ${
-                selectedTier === key ? 'border-blue-500 bg-slate-800 shadow-xl shadow-blue-500/20' : 'border-slate-700 bg-slate-700/50 hover:border-slate-600'
+                selectedTier === key ? 'border-accent-gold bg-background-card shadow-gold' : 'border-border-default bg-background-card/80 hover:border-accent-gold/50'
               }`}
               onClick={() => setSelectedTier(key as 'standard' | 'premium' | 'platinum')}
             >
               <h2 className="text-2xl font-bold mb-2">{tier.name}</h2>
-              <p className="text-slate-400 mb-4">{tier.description}</p>
+              <p className="text-text-secondary mb-4">{tier.description}</p>
 
               <div className="mb-6">
                 {key === 'platinum' ? (
-                  <div className="text-3xl font-bold text-blue-400">Custom Pricing</div>
+                  <div className="text-3xl font-bold text-metal-gradient">Custom Pricing</div>
                 ) : (
                   <div>
                     <span className="text-4xl font-bold">${priceInDollars}</span>
-                    <span className="text-slate-400"> {billingLabel}</span>
+                    <span className="text-text-secondary"> {billingLabel}</span>
                   </div>
                 )}
               </div>
@@ -141,7 +145,7 @@ export default function CheckoutPage() {
                 {tier.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-slate-300">{feature}</span>
+                    <span className="text-text-secondary">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -149,8 +153,8 @@ export default function CheckoutPage() {
               <button
                 className={`w-full py-2 rounded-lg font-semibold transition ${
                   selectedTier === key
-                    ? 'bg-blue-600 text-white hover:bg-blue-700'
-                    : 'bg-slate-600 text-white hover:bg-slate-500'
+                    ? 'bg-accent-gold text-background hover:bg-accent-gold-light'
+                    : 'bg-background-elevated text-text-primary hover:bg-accent-gold hover:text-background'
                 }`}
               >
                 {selectedTier === key ? 'Selected' : 'Select Plan'}
@@ -161,9 +165,9 @@ export default function CheckoutPage() {
 
         {/* City Selection (hide for platinum) */}
         {selectedTier !== 'platinum' && (
-          <div className="bg-slate-700/50 rounded-lg p-8 mb-12 border border-slate-600">
+          <div className="glass-card rounded-lg p-8 mb-12 border border-border-default">
             <h3 className="text-2xl font-bold mb-6">Select Cities</h3>
-            <p className="text-slate-400 mb-4">
+            <p className="text-text-secondary mb-4">
               First city is included. Additional cities: ${(CITY_ADDON_PRICE / 100).toFixed(2)}{billingLabel}
             </p>
 
@@ -174,8 +178,8 @@ export default function CheckoutPage() {
                   onClick={() => handleCityToggle(city)}
                   className={`p-4 rounded-lg font-semibold transition ${
                     selectedCities.includes(city)
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-slate-600 text-slate-300 hover:bg-slate-500'
+                      ? 'bg-accent-gold text-background'
+                      : 'bg-background-elevated text-text-secondary hover:bg-accent-gold hover:text-background'
                   }`}
                 >
                   {city}
@@ -183,28 +187,28 @@ export default function CheckoutPage() {
               ))}
             </div>
 
-            <div className="mt-6 p-4 bg-slate-800/50 rounded-lg border border-slate-600">
+            <div className="mt-6 p-4 bg-background/70 rounded-lg border border-border-default">
               <p className="font-semibold mb-2">Selected: {selectedCities.join(', ')}</p>
-              <p className="text-slate-400 text-sm">Additional city cost: AUD ${((CITY_ADDON_PRICE * (selectedCities.length - 1)) / 100).toFixed(2)}</p>
+              <p className="text-text-secondary text-sm">Additional city cost: AUD ${((CITY_ADDON_PRICE * (selectedCities.length - 1)) / 100).toFixed(2)}</p>
             </div>
           </div>
         )}
 
         {/* Summary and Checkout */}
-        <div className="bg-slate-700/50 rounded-lg p-8 border border-slate-600 max-w-2xl mx-auto">
+        <div className="glass-card-gold rounded-lg p-8 border border-border-gold max-w-2xl mx-auto">
           <h3 className="text-2xl font-bold mb-6">Order Summary</h3>
 
           {selectedTier ? (
             <>
-              <div className="space-y-4 mb-6 pb-6 border-b border-slate-600">
+              <div className="space-y-4 mb-6 pb-6 border-b border-border-default">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">{PRICING_TIERS[selectedTier].name} Subscription</span>
-                  <span>${((PRICING_TIERS[selectedTier].prices[billingCycle as any] as number) / 100).toFixed(2)}</span>
+                  <span className="text-text-secondary">{PRICING_TIERS[selectedTier].name} Subscription</span>
+                  <span>${(selectedBasePrice / 100).toFixed(2)}</span>
                 </div>
 
                 {selectedTier !== 'platinum' && selectedCities.length > 1 && (
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Additional Cities ({selectedCities.length - 1})</span>
+                    <span className="text-text-secondary">Additional Cities ({selectedCities.length - 1})</span>
                     <span>${((CITY_ADDON_PRICE * (selectedCities.length - 1)) / 100).toFixed(2)}</span>
                   </div>
                 )}
@@ -212,30 +216,30 @@ export default function CheckoutPage() {
 
               <div className="flex justify-between items-center mb-8">
                 <span className="text-lg font-semibold">Total</span>
-                <span className="text-3xl font-bold text-blue-400">${priceInDollars}</span>
-                <span className="text-slate-400">{billingLabel}</span>
+                <span className="text-3xl font-bold text-gold-gradient">${priceInDollars}</span>
+                <span className="text-text-secondary">{billingLabel}</span>
               </div>
 
               <button
                 onClick={handleCheckout}
                 disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white font-bold py-3 rounded-lg transition mb-4"
+                className="w-full bg-accent-gold hover:bg-accent-gold-light disabled:bg-text-muted text-background font-bold py-3 rounded-lg transition mb-4"
               >
                 {isLoading ? 'Processing...' : 'Proceed to Checkout'}
               </button>
 
-              <p className="text-sm text-slate-400 text-center">
+              <p className="text-sm text-text-secondary text-center">
                 Secure payment powered by Stripe. You can manage your subscription anytime.
               </p>
             </>
           ) : (
-            <p className="text-slate-400 text-center py-8">Select a plan to continue</p>
+            <p className="text-text-secondary text-center py-8">Select a plan to continue</p>
           )}
         </div>
 
         {/* Footer */}
         <div className="text-center mt-12">
-          <Link href="/" className="text-blue-400 hover:text-blue-300">
+          <Link href="/" className="text-accent-gold hover:text-accent-gold-light">
             ← Back to Home
           </Link>
         </div>

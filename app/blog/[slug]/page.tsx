@@ -4,7 +4,6 @@ import { getBlogPost, getAllBlogPosts } from "@/app/data/blogPosts";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 export const dynamicParams = true;
 

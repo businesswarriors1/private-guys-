@@ -1,5 +1,30 @@
 import { Listing } from "@/app/types";
 
+const listingPhotos = {
+  james:
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80",
+  marcus:
+    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80",
+  ryan:
+    "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=900&q=80",
+  alex:
+    "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80",
+  lucas:
+    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=900&q=80",
+  ethan:
+    "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=900&q=80",
+  oliver:
+    "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=900&q=80",
+  noah:
+    "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=900&q=80",
+  sebastian:
+    "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=900&q=80",
+  daniel:
+    "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=900&q=80",
+  benjamin:
+    "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&w=900&q=80",
+};
+
 export const mockListings: Listing[] = [
   // New Listings
   {
@@ -18,7 +43,8 @@ export const mockListings: Listing[] = [
     services: ["Male companions for women", "Straight male escorts"],
     tier: "standard",
     status: "live",
-    images: [],
+    primaryImage: listingPhotos.james,
+    images: [listingPhotos.james],
     isVerified: true,
     isNew: true,
     createdAt: new Date("2024-06-05"),
@@ -39,7 +65,8 @@ export const mockListings: Listing[] = [
     services: ["Male companions for women", "Straight male companions"],
     tier: "standard",
     status: "live",
-    images: [],
+    primaryImage: listingPhotos.marcus,
+    images: [listingPhotos.marcus],
     isVerified: true,
     isNew: true,
     createdAt: new Date("2024-06-04"),
@@ -61,7 +88,8 @@ export const mockListings: Listing[] = [
     tier: "premium",
     status: "live",
     phoneNumber: "0400 123 456",
-    images: [],
+    primaryImage: listingPhotos.ryan,
+    images: [listingPhotos.ryan],
     isVerified: true,
     isNew: true,
     createdAt: new Date("2024-06-03"),
@@ -82,7 +110,8 @@ export const mockListings: Listing[] = [
     services: ["Male companions for men", "Gay male escorts"],
     tier: "standard",
     status: "live",
-    images: [],
+    primaryImage: listingPhotos.alex,
+    images: [listingPhotos.alex],
     isVerified: true,
     isNew: true,
     createdAt: new Date("2024-06-02"),
@@ -106,7 +135,8 @@ export const mockListings: Listing[] = [
     tier: "premium",
     status: "live",
     phoneNumber: "0412 345 678",
-    images: [],
+    primaryImage: listingPhotos.lucas,
+    images: [listingPhotos.lucas],
     isVerified: true,
     isNew: false,
     createdAt: new Date("2024-05-15"),
@@ -128,7 +158,8 @@ export const mockListings: Listing[] = [
     tier: "premium",
     status: "live",
     phoneNumber: "0423 456 789",
-    images: [],
+    primaryImage: listingPhotos.ethan,
+    images: [listingPhotos.ethan],
     isVerified: true,
     isNew: false,
     createdAt: new Date("2024-05-10"),
@@ -150,7 +181,8 @@ export const mockListings: Listing[] = [
     tier: "premium",
     status: "live",
     phoneNumber: "0434 567 890",
-    images: [],
+    primaryImage: listingPhotos.oliver,
+    images: [listingPhotos.oliver],
     isVerified: true,
     isNew: false,
     createdAt: new Date("2024-05-05"),
@@ -172,7 +204,8 @@ export const mockListings: Listing[] = [
     tier: "premium",
     status: "live",
     phoneNumber: "0445 678 901",
-    images: [],
+    primaryImage: listingPhotos.noah,
+    images: [listingPhotos.noah],
     isVerified: true,
     isNew: false,
     createdAt: new Date("2024-05-01"),
@@ -196,7 +229,8 @@ export const mockListings: Listing[] = [
     tier: "platinum",
     status: "live",
     phoneNumber: "0456 789 012",
-    images: [],
+    primaryImage: listingPhotos.sebastian,
+    images: [listingPhotos.sebastian],
     isVerified: true,
     isNew: false,
     createdAt: new Date("2024-04-15"),
@@ -218,7 +252,8 @@ export const mockListings: Listing[] = [
     tier: "platinum",
     status: "live",
     phoneNumber: "0467 890 123",
-    images: [],
+    primaryImage: listingPhotos.daniel,
+    images: [listingPhotos.daniel],
     isVerified: true,
     isNew: false,
     createdAt: new Date("2024-04-10"),
@@ -240,7 +275,8 @@ export const mockListings: Listing[] = [
     tier: "platinum",
     status: "live",
     phoneNumber: "0478 901 234",
-    images: [],
+    primaryImage: listingPhotos.benjamin,
+    images: [listingPhotos.benjamin],
     isVerified: true,
     isNew: false,
     createdAt: new Date("2024-04-05"),

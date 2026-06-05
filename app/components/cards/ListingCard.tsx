@@ -9,128 +9,127 @@ interface ListingCardProps {
   variant?: "standard" | "premium" | "platinum" | "new";
 }
 
-export default function ListingCard({ listing, variant = "standard" }: ListingCardProps) {
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+export default function ListingCard({
+  listing,
+  variant = "standard",
+}: ListingCardProps) {
   const isPremium = variant === "premium" || listing.tier === "premium";
   const isPlatinum = variant === "platinum" || listing.tier === "platinum";
   const isNew = variant === "new" || listing.isNew;
 
-  const cardClasses = `
-    relative glass-card rounded-lg overflow-hidden transition-all duration-300
-    ${isPlatinum ? "border-2 border-accent-gold shadow-gold" : ""}
-    ${isPremium ? "border-l-4 border-l-accent-gold" : ""}
-    hover:shadow-elevated hover:-translate-y-1
-  `;
-
-  const imageHeight = isPlatinum ? "h-80" : "h-64";
+  const tierLabel = isPlatinum ? "Platinum" : isPremium ? "Premium" : isNew ? "New" : "Standard";
+  const tierClasses = isPlatinum
+    ? "bg-gradient-metal text-background"
+    : isPremium
+      ? "bg-accent-gold text-background"
+      : isNew
+        ? "bg-emerald-500 text-white"
+        : "bg-white/10 text-text-secondary";
 
   return (
-    <Link href={`/profile/${listing.slug}`} className="block group">
-      <div className={cardClasses}>
-        {/* Image Container */}
-        <div className={`relative ${imageHeight} overflow-hidden bg-background-card`}>
+    <Link href={`/profile/${listing.slug}`} className="group block h-full">
+      <article
+        className={`relative flex h-full flex-col overflow-hidden border bg-background-card transition duration-300 hover:-translate-y-1 hover:shadow-elevated ${
+          isPlatinum
+            ? "border-accent-metal shadow-metal"
+            : isPremium
+              ? "border-accent-gold/45"
+              : "border-white/10 hover:border-accent-gold/45"
+        }`}
+      >
+        <div className="relative aspect-[4/4.45] overflow-hidden bg-background-elevated">
           {listing.primaryImage ? (
             <Image
               src={listing.primaryImage}
               alt={listing.displayName}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-text-muted">
-              <span>No Image</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(197,81,208,0.22),transparent_34%),linear-gradient(145deg,#1d1d1d,#090909_64%,rgba(22,13,30,0.76))]">
+              <div className="flex h-24 w-24 items-center justify-center rounded-full border border-accent-gold/35 bg-black/25 font-heading text-4xl font-semibold text-gold-gradient">
+                {getInitials(listing.displayName)}
+              </div>
             </div>
           )}
-          
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {isNew && (
-              <span className="bg-tier-new text-white text-xs font-semibold px-2 py-1 rounded">
-                NEW
-              </span>
-            )}
+
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+          <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+            <span className={`tier-badge ${tierClasses}`}>{tierLabel}</span>
             {listing.isVerified && (
-              <span className="bg-tier-verified text-white text-xs font-semibold px-2 py-1 rounded flex items-center gap-1">
-                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                VERIFIED
+              <span className="tier-badge border border-sky-400/35 bg-sky-500/15 text-sky-200">
+                Verified
               </span>
             )}
           </div>
 
-          {/* Tier Badge */}
-          {(isPremium || isPlatinum) && (
-            <div className="absolute top-3 right-3">
-              <span className={`text-xs font-bold px-3 py-1 rounded ${
-                isPlatinum 
-                  ? "bg-gradient-gold text-background" 
-                  : "bg-accent-gold/90 text-background"
-              }`}>
-                {isPlatinum ? "PLATINUM" : "PREMIUM"}
-              </span>
+          {(isPremium || isPlatinum) && listing.phoneNumber && (
+            <div className="absolute bottom-4 left-4 rounded-full border border-accent-gold/35 bg-background/80 px-4 py-2 font-mono text-sm font-semibold text-accent-gold backdrop-blur">
+              {listing.phoneNumber}
             </div>
           )}
         </div>
 
-        {/* Content */}
-        <div className="p-4">
-          {/* Name & Location */}
-          <div className="flex items-start justify-between mb-3">
+        <div className="flex flex-1 flex-col p-5">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <h3 className="text-text-primary font-semibold text-lg group-hover:text-accent-gold transition-colors">
+              <h3 className="font-heading text-2xl font-semibold text-text-primary transition-colors group-hover:text-accent-gold">
                 {listing.displayName}
               </h3>
-              <p className="text-text-secondary text-sm">{listing.city}</p>
+              <p className="mt-1 text-sm text-text-secondary">
+                {listing.city}, {listing.state}
+              </p>
             </div>
+            <span className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-text-muted">
+              {listing.status}
+            </span>
           </div>
 
-          {/* Stats Grid */}
-          <div className="stats-grid text-sm mb-3">
-            {listing.ageRange && (
-              <div>
-                <span className="text-text-muted text-xs uppercase">Age</span>
-                <p className="text-text-primary font-medium">{listing.ageRange}</p>
+          <div className="mt-5 grid grid-cols-2 gap-3 border-y border-white/10 py-4 text-sm">
+            {[
+              ["Age", listing.ageRange],
+              ["Height", listing.height],
+              ["Build", listing.build],
+              ["Style", listing.incallOutcall || "By request"],
+            ].map(([label, value]) => (
+              <div key={label}>
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-text-muted">
+                  {label}
+                </p>
+                <p className="mt-1 font-semibold text-text-primary">{value}</p>
               </div>
-            )}
-            {listing.height && (
-              <div>
-                <span className="text-text-muted text-xs uppercase">Height</span>
-                <p className="text-text-primary font-medium">{listing.height}</p>
-              </div>
-            )}
-            {listing.build && (
-              <div>
-                <span className="text-text-muted text-xs uppercase">Build</span>
-                <p className="text-text-primary font-medium">{listing.build}</p>
-              </div>
-            )}
-            {listing.ethnicity && (
-              <div>
-                <span className="text-text-muted text-xs uppercase">Ethnicity</span>
-                <p className="text-text-primary font-medium">{listing.ethnicity}</p>
-              </div>
-            )}
+            ))}
           </div>
 
-          {/* Phone (Premium/Platinum only) */}
-          {(isPremium || isPlatinum) && listing.phoneNumber && (
-            <div className="flex items-center gap-2 text-accent-gold mb-3">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-              </svg>
-              <span className="font-medium">{listing.phoneNumber}</span>
-            </div>
-          )}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {listing.services.slice(0, 2).map((service) => (
+              <span
+                key={service}
+                className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-text-secondary"
+              >
+                {service}
+              </span>
+            ))}
+          </div>
 
-          {/* CTA */}
-          <div className="flex items-center justify-between pt-3 border-t border-border-default">
-            <span className="text-text-muted text-sm">Visit Profile For Rates</span>
-            <span className="text-accent-gold text-sm font-medium group-hover:underline">
-              View Profile →
+          <div className="mt-auto flex items-center justify-between pt-6">
+            <span className="text-sm text-text-muted">Visit profile for rates</span>
+            <span className="text-sm font-bold uppercase tracking-[0.16em] text-accent-gold">
+              View
             </span>
           </div>
         </div>
-      </div>
+      </article>
     </Link>
   );
 }
