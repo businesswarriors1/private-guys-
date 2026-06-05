@@ -14,12 +14,49 @@ export const metadata: Metadata = {
     "Brisbane",
     "Perth",
     "companion directory",
+    "verified escorts",
+    "professional companions",
   ],
   authors: [{ name: "Private Guys Australia" }],
+  creator: "Private Guys Australia",
+  publisher: "Private Guys Australia",
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  metadataBase: new URL("https://privateguys.com.au"),
+  alternates: {
+    canonical: "https://privateguys.com.au",
+  },
   openGraph: {
-    title: "Private Guys Australia",
-    description: "Australia's Premier Male Companion Directory",
+    title: "Private Guys Australia | Premier Male Companion Directory",
+    description: "Australia's premier directory for verified male companions",
+    url: "https://privateguys.com.au",
     type: "website",
+    locale: "en_AU",
+    siteName: "Private Guys Australia",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Private Guys Australia",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Private Guys Australia | Premier Male Companion Directory",
+    description: "Australia's premier directory for verified male companions",
+    images: ["/twitter-image.png"],
   },
 };
 
