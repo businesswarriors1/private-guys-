@@ -48,13 +48,6 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams() {
-  const posts = getAllBlogPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
-}
-
 export default function BlogPostPage({ params }: BlogPostPageProps) {
   const post = getBlogPost(params.slug);
 

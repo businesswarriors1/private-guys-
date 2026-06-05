@@ -53,11 +53,7 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams() {
-  return cities.map((city) => ({
-    city: city.toLowerCase().replace(/\s+/g, "-"),
-  }));
-}
+export const dynamicParams = true;
 
 export default function MaleCompanionPage({
   params,
