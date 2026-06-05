@@ -119,3 +119,149 @@ export const attributes = {
   hairColor: ["Black", "Brown", "Blonde", "Red", "Grey", "Bald", "Other"],
   eyeColor: ["Brown", "Blue", "Green", "Hazel", "Grey", "Amber"]
 };
+
+// API Response types
+export interface ApiResponse<T> {
+  success: boolean
+  data?: T
+  error?: string
+  message?: string
+}
+
+// Auth types
+export interface RegisterPayload {
+  email: string
+  password: string
+  display_name: string
+}
+
+export interface LoginPayload {
+  email: string
+  password: string
+}
+
+export interface SessionUser {
+  id: string
+  email: string
+  display_name?: string
+  role: string
+}
+
+// Database schema types for Supabase
+export interface DBUser {
+  id: string
+  email: string
+  password_hash: string
+  display_name: string | null
+  status: 'active' | 'inactive' | 'banned'
+  role: 'user' | 'moderator' | 'admin'
+  created_at: string
+  updated_at: string
+}
+
+export interface DBListing {
+  id: string
+  user_id: string
+  display_name: string
+  city?: string
+  state?: string
+  age_range?: string
+  height?: string
+  build?: string
+  ethnicity?: string
+  hair_color?: string
+  eye_color?: string
+  bio?: string
+  rates_text?: string
+  phone_number?: string
+  incall_outcall?: string
+  services?: string[]
+  tier: 'basic' | 'standard' | 'premium'
+  status: 'pending' | 'active' | 'inactive' | 'flagged' | 'banned'
+  primary_image?: string
+  is_verified: boolean
+  created_at: string
+  updated_at: string
+  expires_at?: string
+}
+
+export interface DBListingPhoto {
+  id: string
+  listing_id: string
+  url: string
+  is_verified: boolean
+  sort_order: number
+  created_at: string
+}
+
+export interface DBVerification {
+  id: string
+  user_id: string
+  id_document_url?: string
+  selfie_url?: string
+  status: 'pending' | 'approved' | 'rejected'
+  reviewed_at?: string
+  created_at: string
+  updated_at: string
+}
+
+export interface DBSubscription {
+  id: string
+  user_id: string
+  tier: string
+  amount?: number
+  interval: 'monthly' | 'quarterly' | 'yearly'
+  start_date: string
+  end_date?: string
+  status: 'active' | 'cancelled' | 'expired'
+  created_at: string
+  updated_at: string
+}
+
+export interface DBModerationItem {
+  id: string
+  content_type: 'listing' | 'photo' | 'user' | 'report'
+  content_id: string
+  status: 'pending' | 'approved' | 'rejected'
+  flags?: Record<string, any>
+  created_at: string
+  updated_at: string
+}
+
+// Supabase database types
+export interface Database {
+  public: {
+    Tables: {
+      users: {
+        Row: DBUser
+        Insert: Omit<DBUser, 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<DBUser>
+      }
+      listings: {
+        Row: DBListing
+        Insert: Omit<DBListing, 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<DBListing>
+      }
+      listing_photos: {
+        Row: DBListingPhoto
+        Insert: Omit<DBListingPhoto, 'id' | 'created_at'>
+        Update: Partial<DBListingPhoto>
+      }
+      verifications: {
+        Row: DBVerification
+        Insert: Omit<DBVerification, 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<DBVerification>
+      }
+      subscriptions: {
+        Row: DBSubscription
+        Insert: Omit<DBSubscription, 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<DBSubscription>
+      }
+      moderation_queue: {
+        Row: DBModerationItem
+        Insert: Omit<DBModerationItem, 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<DBModerationItem>
+      }
+    }
+  }
+}
